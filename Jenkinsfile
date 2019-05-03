@@ -20,7 +20,7 @@ pipeline {
       steps {
         container('jx-base') {
           sh "export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml"
-          sh "$(aws ecr get-login --no-include-email --region eu-west-2)"
+          sh $(aws ecr get-login --no-include-email --region eu-west-2)
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           dir('./charts/preview') {
             sh "make preview"
@@ -42,7 +42,7 @@ pipeline {
           sh "jx step git credentials"
           sh "jx step next-version --use-git-tag-only --tag"
           sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
-          sh "$(aws ecr get-login --no-include-email --region eu-west-2)"
+          sh $(aws ecr get-login --no-include-email --region eu-west-2)
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
         }
       }

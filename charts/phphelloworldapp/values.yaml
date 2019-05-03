@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 replicaCount: 2
 image:
-  repository: draft
-  tag: dev
+  repository: 387224370986.dkr.ecr.eu-west-2.amazonaws.com/matthew-gill/phphelloworldapp
+  tag: 0.0.6
   pullPolicy: IfNotPresent
 
 # define environment variables here as a map of key: value

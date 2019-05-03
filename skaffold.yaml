@@ -7,7 +7,7 @@ build:
     docker: {}
   tagPolicy:
     envTemplate:
-      template: '{{.DOCKER_REGISTRY}}/matt-a-gill-me-com/phphelloworldapp:{{.VERSION}}'
+      template: '{{.DOCKER_REGISTRY}}/matthew-gill/phphelloworldapp:{{.VERSION}}'
   local: {}
 deploy:
   kubectl: {}
@@ -18,7 +18,7 @@ profiles:
     - docker: {}
     tagPolicy:
       envTemplate:
-        template: '{{.DOCKER_REGISTRY}}/matt-a-gill-me-com/phphelloworldapp:{{.DIGEST_HEX}}'
+        template: '{{.DOCKER_REGISTRY}}/matthew-gill/phphelloworldapp:{{.DIGEST_HEX}}'
     local: {}
   deploy:
     helm:
@@ -26,5 +26,5 @@ profiles:
       - name: phphelloworldapp
         chartPath: charts/phphelloworldapp
         setValueTemplates:
-          image.repository: '{{.DOCKER_REGISTRY}}/matt-a-gill-me-com/phphelloworldapp'
+          image.repository: '{{.DOCKER_REGISTRY}}/matthew-gill/phphelloworldapp'
           image.tag: '{{.DIGEST_HEX}}'

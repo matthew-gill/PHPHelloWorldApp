@@ -1,0 +1,30 @@
+apiVersion: skaffold/v1beta2
+kind: Config
+build:
+  artifacts:
+  - image: changeme
+    context: .
+    docker: {}
+  tagPolicy:
+    envTemplate:
+      template: '{{.DOCKER_REGISTRY}}/matt-a-gill-me-com/phphelloworldapp:{{.VERSION}}'
+  local: {}
+deploy:
+  kubectl: {}
+profiles:
+- name: dev
+  build:
+    artifacts:
+    - docker: {}
+    tagPolicy:
+      envTemplate:
+        template: '{{.DOCKER_REGISTRY}}/matt-a-gill-me-com/phphelloworldapp:{{.DIGEST_HEX}}'
+    local: {}
+  deploy:
+    helm:
+      releases:
+      - name: phphelloworldapp
+        chartPath: charts/phphelloworldapp
+        setValueTemplates:
+          image.repository: '{{.DOCKER_REGISTRY}}/matt-a-gill-me-com/phphelloworldapp'
+          image.tag: '{{.DIGEST_HEX}}'

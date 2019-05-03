@@ -20,9 +20,8 @@ pipeline {
       steps {
         container('jx-base') {
           sh "export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml"
-          sh "jx step post build --image 
           sh "$(aws ecr get-login --no-include-email --region eu-west-2)"
-          $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
+          sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           dir('./charts/preview') {
             sh "make preview"
             sh "jx preview --app $APP_NAME --dir ../.."
